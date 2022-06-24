@@ -1,4 +1,4 @@
-# color-pick
+# popup-chrome-extension
 
 ## Project setup
 ```
