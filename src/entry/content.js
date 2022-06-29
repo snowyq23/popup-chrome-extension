@@ -1,3 +1,10 @@
+/* Create temp DOM to mount extension */
+const para = document.createElement("div");
+para.id = "bes-extension";
+const target = document.querySelector(".items-center");
+target.appendChild(para);
+
+/* VUE section */
 import { createApp } from "vue";
 import InApp from "../view/ContentView.vue";
 import store from "../store";
@@ -26,4 +33,4 @@ const inApp = createApp(InApp);
 inApp.use(store).use(vuetify);
 inApp.component("font-awesome-icon", FontAwesomeIcon);
 
-inApp.mount(".crayons-header__container .items-center");
+inApp.mount("#bes-extension");
