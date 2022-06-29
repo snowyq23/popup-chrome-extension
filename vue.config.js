@@ -29,6 +29,7 @@ const isDevMode = process.env.NODE_ENV === "development";
 module.exports = {
   pages,
   filenameHashing: false,
+
   chainWebpack: (config) => {
     config.plugin("copy").use(require("copy-webpack-plugin"), [
       {
@@ -45,6 +46,7 @@ module.exports = {
       },
     ]);
   },
+
   configureWebpack: {
     output: {
       filename: `[name].js`,
@@ -52,7 +54,14 @@ module.exports = {
     },
     devtool: isDevMode ? "inline-source-map" : false,
   },
+
   css: {
     extract: false, // Make sure the css is the same
+  },
+
+  pluginOptions: {
+    vuetify: {
+      // https://github.com/vuetifyjs/vuetify-loader/tree/next/packages/vuetify-loader
+    },
   },
 };

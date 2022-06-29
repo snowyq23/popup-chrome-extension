@@ -4,15 +4,9 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: "popupView",
-  data() {
-    return {
-      msg: "popup",
-    };
-  },
-};
+<script setup>
+import { ref } from "vue";
+const msg = ref("popup");
 </script>
 
 <style>

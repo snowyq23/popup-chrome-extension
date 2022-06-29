@@ -1,15 +1,11 @@
-/* eslint-disable prettier/prettier */
-// const colors = ["red", "orange", "yellow", "green", "blue", "violet"];
-
-// const colorPicker = () => {
-//  const randomIndex = Math.floor(Math.random() * colors.length);
-//  return colors[randomIndex];
-// };
-
-// document.body.style.backgroundColor = colorPicker();
-
 import { createApp } from "vue";
-import InApp from "../view/content-view.vue";
+import InApp from "../view/ContentView.vue";
+import store from "../store";
+import vuetify from "../plugins/vuetify";
+
+/* Font loader */
+// import { loadFonts } from "../plugins/webfontloader";
+// loadFonts();
 
 /* import the fontawesome core */
 import { library } from "@fortawesome/fontawesome-svg-core";
@@ -18,11 +14,16 @@ import { library } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
 /* import specific icons */
-import { faAlicon } from "@fortawesome/free-regular-svg-icons";
+import { faGripLines } from "@fortawesome/free-solid-svg-icons";
+import { faAngellist, fa500px } from "@fortawesome/free-brands-svg-icons";
 
 /* add icons to the library */
-library.add(faAlicon);
+library.add(faGripLines, faAngellist, fa500px);
 
-createApp(InApp)
- .component("font-awesome-icon", FontAwesomeIcon)
- .mount(".crayons-header__container .items-center");
+/* In-app setting */
+const inApp = createApp(InApp);
+
+inApp.use(store).use(vuetify);
+inApp.component("font-awesome-icon", FontAwesomeIcon);
+
+inApp.mount(".crayons-header__container .items-center");

@@ -8,9 +8,9 @@
  },
  "permissions": ["activeTab"],
  "action": {
-  "default_popup": "popup.html",
-  "default_icon": "logo.png"
+  "default_popup": "popup.html"
  },
+
  "content_scripts": [
   {
    "matches": ["<all_urls>"],
