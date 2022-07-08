@@ -4,17 +4,33 @@
  "description": "color",
  "version": "0.0.1",
  "background": {
-  "service_worker": "/background.js"
+  "service_worker": ["background.js"]
  },
- "permissions": ["activeTab"],
+
+ "permissions": [
+  "scripting",
+  "activeTab",
+  "contextMenus",
+  "tabs",
+  "webRequest"
+ ],
+
+ "icons": {
+  "16": "icons/bes16.png",
+  "48": "icons/bes48.png",
+  "128": "icons/bes128.png"
+ },
+
  "action": {
   "default_popup": "popup.html"
  },
 
  "content_scripts": [
   {
-   "matches": ["<all_urls>"],
-   "js": ["/content.js"]
+   "matches": ["https://*.dev.to/*"],
+   "js": ["browser-polyfill.js", "content.js"]
   }
- ]
+ ],
+
+ "host_permissions": ["*://*/*"]
 }

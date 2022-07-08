@@ -1,9 +1,10 @@
 <template>
   <div class="wrapper">
     <div>Quick Settings</div>
+
     <div class="row" @click="isDark = !isDark">
       <label class="col">
-        <div>Dark mode</div>
+        <div>Dark Mode</div>
 
         <div class="toggle" :class="[{ on: isDark }, { off: !isDark }]">
           <div class="label">{{ isDark ? "ON" : "OFF" }}</div>
@@ -11,11 +12,16 @@
         </div>
       </label>
     </div>
+
+    <ImagePanel></ImagePanel>
   </div>
 </template>
 
 <script setup>
 import { ref } from "vue";
+import ImagePanel from "../image-collect/ImagePanel.vue";
+
+// Dark Mode
 const isDark = ref(false);
 function changeBg() {
   if (isDark.value === true) document.body.style.backgroundColor = "black";
@@ -24,30 +30,24 @@ function changeBg() {
 </script>
 
 <style lang="scss">
-row {
+.row {
   cursor: default;
-  -webkit-user-select: none;
-  -ms-user-select: none;
   user-select: none;
   position: relative;
   font-style: normal;
   font-weight: 400;
-  font-size: 14px;
+  font-size: 20px;
   line-height: 20px;
-  padding-top: 16px;
-  padding-bottom: 16px;
-  display: -ms-flexbox;
+  padding-top: 8px;
+  padding-bottom: 8px;
   display: flex;
-  -ms-flex-align: center;
   align-items: center;
   margin: auto;
 }
 
 .col {
   cursor: pointer;
-  display: -ms-flexbox;
   display: flex;
-  -ms-flex-align: start;
   align-items: flex-start;
   position: relative;
   width: 100%;
@@ -55,7 +55,6 @@ row {
 
   .toggle {
     border-radius: 10px;
-    display: -ms-flexbox;
     display: flex;
     vertical-align: baseline;
     margin-top: 2px;
@@ -102,9 +101,7 @@ row {
     color: #fff;
     display: -ms-flexbox;
     display: flex;
-    -ms-flex-align: center;
     align-items: center;
-    -ms-flex-pack: center;
     justify-content: center;
   }
 

@@ -1,4 +1,5 @@
-/* Create temp DOM to mount extension */
+/* eslint-disable prettier/prettier */
+/* Create temp DOM to mount extension button */
 const para = document.createElement("div");
 para.id = "bes-extension";
 const target = document.querySelector(".items-center");

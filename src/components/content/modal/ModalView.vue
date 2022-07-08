@@ -5,7 +5,7 @@
   <Transition name="slide">
     <div class="modal-inner" v-show="showModal">
       <div class="modal-header text-h6">
-        <div>Extra menu</div>
+        <div><img :src="logo" width="50" height="50" class="bes-logo" /></div>
         <button type="button" @click="$emit('close')">
           <font-awesome-icon icon="fa-solid fa-grip-lines" />
         </button>
@@ -21,6 +21,7 @@
 <script setup>
 import { defineProps, defineEmits } from "vue";
 import ModalContent from "./ModalContent.vue";
+import logo from "@/assets/bes.png";
 
 defineProps({
   showModal: { type: Boolean, default: true },
@@ -38,19 +39,20 @@ defineEmits(["close"]);
 }
 
 .modal-overlay {
+  display: block;
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  overflow-x: hidden;
+  overflow-x: scroll;
   overflow-y: auto;
   background-color: rgba(0, 0, 0, 0.4);
   cursor: pointer;
 }
 
 .modal-inner {
-  max-width: 500px;
+  max-width: 50%;
   display: flex;
   flex-direction: column;
   position: fixed;
@@ -63,6 +65,7 @@ defineEmits(["close"]);
   z-index: 999;
   transform: none;
   color: black;
+  overflow-y: scroll;
 
   .modal-header {
     display: flex;
@@ -85,5 +88,9 @@ defineEmits(["close"]);
 .slide-leave-to {
   opacity: 0;
   transform: scaleX(0.3) translateX(-200%);
+}
+
+img {
+  display: inline-block;
 }
 </style>
