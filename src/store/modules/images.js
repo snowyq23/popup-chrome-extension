@@ -13,24 +13,33 @@ const getters = {};
 // actions
 const actions = {
  getAllImages({ commit }) {
+  // Get raw
   const images = document.querySelectorAll("img:not(.bes-img):not(.bes-logo)");
+  console.log(images);
   const tempArr = Array.from(images).map((image) => ({
    src: image.src,
    naturalHeight: image.naturalHeight,
    naturalWidth: image.naturalWidth,
   }));
   const rawArr = [...state.raw].concat(tempArr);
-  let uniqueArr = [];
-  rawArr.forEach((el) => {
+
+  // Remove duplicate and null size
+  const uniqueLink = [];
+  const uniqueArr = rawArr.filter((el) => {
+   const isDuplicate = uniqueLink.includes(el.src);
+
    if (
-    !uniqueArr.includes(el.src) &&
+    !isDuplicate &&
     el.naturalHeight >= state.minHeight &&
     el.naturalWidth >= state.minWidth
    ) {
-    uniqueArr.push(el);
+    uniqueLink.push(el.src);
+    return true;
    }
+   return false;
   });
 
+  // Do commit
   setTimeout(() => {
    commit("setPanel", uniqueArr);
    commit("setRaw", uniqueArr);
