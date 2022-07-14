@@ -2,7 +2,7 @@
 /* Create temp DOM to mount extension button */
 const para = document.createElement("div");
 para.id = "bes-extension";
-const target = document.querySelector(".items-center");
+const target = document.querySelector("body");
 target.appendChild(para);
 
 /* VUE section */
@@ -22,11 +22,16 @@ import { library } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
 /* import specific icons */
-import { faGripLines } from "@fortawesome/free-solid-svg-icons";
-import { faAngellist, fa500px } from "@fortawesome/free-brands-svg-icons";
+import {
+ faGripLines,
+ faSolarPanel,
+ faMagnifyingGlass,
+} from "@fortawesome/free-solid-svg-icons";
+
+import { fa500px } from "@fortawesome/free-brands-svg-icons";
 
 /* add icons to the library */
-library.add(faGripLines, faAngellist, fa500px);
+library.add(faGripLines, faSolarPanel, faMagnifyingGlass, fa500px);
 
 /* In-app setting */
 const inApp = createApp(InApp);

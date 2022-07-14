@@ -1,6 +1,18 @@
 <template>
   <div class="main-popup">
+    <div><img :src="logo" width="50" height="50" class="bes-logo" /></div>
     <h1>Image Selector</h1>
+
+    <div class="row" @click="isDark = !isDark">
+      <label class="col">
+        <div>Dark Mode</div>
+
+        <div class="toggle" :class="[{ on: isDark }, { off: !isDark }]">
+          <div class="label">{{ isDark ? "ON" : "OFF" }}</div>
+          <div class="circle">{{ changeBg() }}</div>
+        </div>
+      </label>
+    </div>
 
     <div class="row" @click="isCheckbox = !isCheckbox">
       <label class="col">
@@ -12,26 +24,36 @@
         </div>
       </label>
     </div>
-
-    <GrabUrlButton>GRAB NOW</GrabUrlButton>
   </div>
 </template>
 
 <script setup>
 import { ref } from "vue";
-import GrabUrlButton from "../components/popup/GrabUrlButton.vue";
+import logo from "@/assets/bes.png";
 
+/* Toggle */
 const isCheckbox = ref(true);
+
+/* Dark Mode */
+const isDark = ref(false);
+function changeBg() {
+  if (isDark.value === true) {
+    document.body.style.backgroundColor = "black";
+    document.body.style.color = "white";
+  } else {
+    document.body.style.backgroundColor = "var(--body-bg)";
+    document.body.style.color = "black";
+  }
+}
 </script>
 
 <style lang="scss">
 .main-popup {
   font-family: "Avenir", Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  margin-top: 20px;
+  min-width: 200px;
 }
 
 .row {

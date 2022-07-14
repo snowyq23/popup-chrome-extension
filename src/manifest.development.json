@@ -1,11 +1,8 @@
 {
  "manifest_version": 3,
- "name": "color",
+ "name": "Image Scanner",
  "description": "color",
  "version": "0.0.1",
- "background": {
-  "service_worker": ["background.js"]
- },
 
  "permissions": [
   "scripting",
@@ -27,10 +24,14 @@
 
  "content_scripts": [
   {
-   "matches": ["https://*.dev.to/*"],
-   "js": ["browser-polyfill.js", "content.js"]
+   "matches": ["<all_urls>"],
+   "js": ["content.js"]
   }
  ],
+
+ "content_security_policy": {
+  "extension_page": "script-src 'self' 'unsafe-eval'"
+ },
 
  "host_permissions": ["*://*/*"]
 }

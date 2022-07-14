@@ -11,7 +11,6 @@
         </button>
       </div>
       <div class="modal-content">
-        <slot />
         <ModalContent />
       </div>
     </div>

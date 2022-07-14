@@ -1,32 +1,14 @@
 <template>
-  <div class="wrapper">
+  <div id="bes-modal-content">
+    <font-awesome-icon icon="fa-brands fa-500px" />
     <div>Quick Settings</div>
-
-    <div class="row" @click="isDark = !isDark">
-      <label class="col">
-        <div>Dark Mode</div>
-
-        <div class="toggle" :class="[{ on: isDark }, { off: !isDark }]">
-          <div class="label">{{ isDark ? "ON" : "OFF" }}</div>
-          <div class="circle">{{ changeBg() }}</div>
-        </div>
-      </label>
-    </div>
 
     <ImagePanel></ImagePanel>
   </div>
 </template>
 
 <script setup>
-import { ref } from "vue";
 import ImagePanel from "../image-collect/ImagePanel.vue";
-
-// Dark Mode
-const isDark = ref(false);
-function changeBg() {
-  if (isDark.value === true) document.body.style.backgroundColor = "black";
-  else document.body.style.backgroundColor = "var(--body-bg)";
-}
 </script>
 
 <style lang="scss">

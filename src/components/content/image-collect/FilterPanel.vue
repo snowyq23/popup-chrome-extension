@@ -8,18 +8,19 @@
           maxlength="8"
           name="size-min-value"
           :value="min"
-          @input="$emit('update:min', $event.target.value)"
+          @input="$emit('update:min', parseFloat($event.target.value))"
           @keyup.enter="$emit('filterUpdate')"
         />
         <label class="place-holder">px</label>
       </span>
+      <div class="divider">-</div>
       <span class="range-right">
         <input
           type="tel"
           maxlength="8"
           name="size-max-value"
           :value="max"
-          @input="$emit('update:max', $event.target.value)"
+          @input="$emit('update:max', parseFloat($event.target.value))"
           @keyup.enter="$emit('filterUpdate')"
         />
         <label class="place-holder">px</label>
@@ -31,17 +32,16 @@
 <script setup>
 import { defineProps, defineEmits } from "vue";
 
-defineProps({ min: String, max: String });
-defineEmits(["filterUpdate"]);
+defineProps({ min: Number, max: Number });
+defineEmits(["filterUpdate", "update:min", "update:max"]);
 </script>
 
 <style lang="scss">
 .filter-panel {
-  max-width: 80%;
   margin: 0 auto;
 
   .range-size {
-    display: block;
+    display: flex;
     overflow: hidden;
     padding: 5px 0 20px;
     position: relative;
@@ -55,11 +55,9 @@ defineEmits(["filterUpdate"]);
       background: #fff;
     }
     span.range-left {
-      float: left;
       margin: 5px;
     }
     span.range-right {
-      float: right;
       margin: 5px;
     }
 
@@ -70,6 +68,11 @@ defineEmits(["filterUpdate"]);
       font-size: 14px;
       float: left;
       background-color: #fff;
+    }
+
+    .divider {
+      padding: 7px;
+      margin: 5px;
     }
 
     label.place-holder {

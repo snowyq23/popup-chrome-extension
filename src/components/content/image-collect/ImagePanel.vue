@@ -1,29 +1,37 @@
 <template>
   <div class="header">
-    <h4>Filter By</h4>
+    <div style="text-align: left; font-size: 20px">Filter By</div>
     <div id="filter-image">
       <FilterPanel
         v-model:min="minWidth"
         v-model:max="maxWidth"
-        @filterUpdate="filterWidth"
+        @filterUpdate="filterUpdate"
         >Width</FilterPanel
       >
 
       <FilterPanel
         v-model:min="minHeight"
         v-model:max="maxHeight"
-        @filterUpdate="filterHeight"
+        @filterUpdate="filterUpdate"
         >Height</FilterPanel
       >
     </div>
 
     <div id="selectAll">
       <input type="checkbox" @click="selectAll" /> <span>Select all</span>
+      <div class="result">
+        <div>
+          Total <span>({{ raw.length }})</span>
+        </div>
+        <div>
+          Results <span>({{ panel.length }})</span>
+        </div>
+      </div>
     </div>
   </div>
   <div class="container" id="img-panel">
-    <div v-for="item in imageList" :key="item" class="imageDiv">
-      <img :src="item" class="bes-img" />
+    <div v-for="item in panel" :key="item" class="imageDiv">
+      <img :src="item.src" class="bes-img" />
       <input type="checkbox" class="bes-checkbox" />
     </div>
   </div>
@@ -31,29 +39,24 @@
 
 <script setup>
 import { ref } from "vue";
+import { computed } from "vue";
+import { useStore } from "vuex";
+
 import FilterPanel from "./FilterPanel.vue";
 
+// Store
+const store = useStore();
+
 // Image List
-const imageList = ref([]);
+const panel = computed(() => store.state.images.panel);
+const raw = computed(() => store.state.images.raw);
+
 // Width
-const minWidth = ref(500);
-const maxWidth = ref(1000);
+const minWidth = ref(1);
+const maxWidth = ref(100000);
 // Height
-const minHeight = ref(500);
-const maxHeight = ref(1000);
-
-/* Section: Receive URL list from popup */
-chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
-  addImagesToContainer(message);
-  sendResponse("OK");
-});
-
-function addImagesToContainer(urls) {
-  alert("Updated");
-  const list = Object.values(urls);
-  imageList.value = list;
-}
-/* End Section: Receive URL list from popup */
+const minHeight = ref(1);
+const maxHeight = ref(100000);
 
 /* Section: Select All */
 function selectAll(event) {
@@ -65,30 +68,15 @@ function selectAll(event) {
 /* End Section: Select All */
 
 /* Section: Image Filter */
-function filterWidth() {
-  var imgEl;
-  var filterResult = [];
-  imageList.value.forEach((el) => {
-    imgEl = document.querySelector(`img[src="${el}"]`);
-    var realWidth = imgEl.naturalWidth;
-    if (realWidth > minWidth.value) {
-      filterResult.push(el);
-    }
-  });
-  imageList.value = filterResult;
-}
-
-function filterHeight() {
-  var imgEl;
-  var filterResult = [];
-  imageList.value.forEach((el) => {
-    imgEl = document.querySelector(`img[src="${el}"]`);
-    var realHeight = imgEl.naturalHeight;
-    if (realHeight > minHeight.value) {
-      filterResult.push(el);
-    }
-  });
-  imageList.value = filterResult;
+function filterUpdate() {
+  const filtered = raw.value.filter(
+    (image) =>
+      image.naturalWidth > minWidth.value &&
+      image.naturalWidth < maxWidth.value &&
+      image.naturalHeight > minHeight.value &&
+      image.naturalHeight < maxHeight.value
+  );
+  store.commit("images/setPanel", filtered);
 }
 /* End Section: Image Filter */
 </script>
@@ -117,6 +105,20 @@ function filterHeight() {
     span {
       font-weight: bold;
       font-size: 16px;
+    }
+
+    .result {
+      margin-left: auto;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+
+      div {
+        margin-left: 5px;
+      }
+      div.span {
+        font-weight: bold;
+      }
     }
   }
 }
