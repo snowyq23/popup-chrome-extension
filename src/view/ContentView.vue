@@ -73,6 +73,10 @@ const scan = () => {
   .btn div {
     padding-left: 5px;
   }
+
+  .hover-color:hover {
+    color: rgba(0, 115, 255, 0.754);
+  }
 }
 .menu-left {
   position: fixed;

@@ -17,9 +17,27 @@
       >
     </div>
 
-    <div id="selectAll">
-      <input type="checkbox" @click="selectAll" /> <span>Select all</span>
-      <div class="result">
+    <div class="btn-panel">
+      <div id="bes-select-all">
+        <input type="checkbox" @click="selectAll" />
+        <span>Select all</span>
+      </div>
+
+      <div id="bes-clear-all">
+        <button @click="clearSelected" class="hover-color">
+          <font-awesome-icon icon="fa-solid fa-circle-minus" />
+          <span>Clear</span>
+        </button>
+      </div>
+
+      <div id="bes-clear-all">
+        <button @click="clearSelected" class="hover-color">
+          <font-awesome-icon icon="fa-solid fa-paper-plane" />
+          <span>Submit</span>
+        </button>
+      </div>
+
+      <div id="bes-result">
         <div>
           Total <span>({{ raw.length }})</span>
         </div>
@@ -29,10 +47,25 @@
       </div>
     </div>
   </div>
+
   <div class="container" id="img-panel">
     <div v-for="item in panel" :key="item" class="imageDiv">
       <img :src="item.src" class="bes-img" />
-      <input type="checkbox" class="bes-checkbox" />
+      <input
+        type="checkbox"
+        class="bes-checkbox"
+        :value="checked"
+        @change="
+          (event) => {
+            checked = event.target.checked;
+            item.isSelected = checked;
+          }
+        "
+      />
+
+      <button @click="remove(item)" class="hover-color">
+        <font-awesome-icon icon="fa-solid fa-trash-can" class="bes-remove" />
+      </button>
     </div>
   </div>
 </template>
@@ -58,14 +91,29 @@ const maxWidth = ref(100000);
 const minHeight = ref(1);
 const maxHeight = ref(100000);
 
+// Checkbox
+const checked = ref(false);
+
 /* Section: Select All */
 function selectAll(event) {
   const items = document.querySelectorAll(".bes-checkbox");
   for (let item of items) {
     item.checked = event.target.checked;
   }
+  if (event.target.checked) {
+    store.commit("images/selectAll", true);
+  } else {
+    store.commit("images/selectAll", false);
+  }
 }
+
 /* End Section: Select All */
+
+/* Section: Clear Selected */
+function clearSelected() {
+  store.dispatch("images/removeSelected");
+}
+/* End Section: Remove image */
 
 /* Section: Image Filter */
 function filterUpdate() {
@@ -79,6 +127,14 @@ function filterUpdate() {
   store.commit("images/setPanel", filtered);
 }
 /* End Section: Image Filter */
+
+/* Section: Remove image */
+function remove(image) {
+  store.commit("images/setHidden", image.src);
+  const updatedPanel = panel.value.filter((el) => el !== image);
+  store.commit("images/setPanel", updatedPanel);
+}
+/* End Section: Remove image */
 </script>
 
 <style lang="scss">
@@ -90,34 +146,34 @@ function filterUpdate() {
     flex-direction: row;
   }
 
-  #selectAll {
+  .btn-panel {
     display: flex;
     flex-direction: row;
     align-items: center;
     margin-right: 10px;
+    justify-content: space-between;
+
+    #bes-select-all {
+      display: inline-flex;
+    }
 
     input {
-      margin-right: 0.5rem;
-      width: 20px;
-      height: 20px;
+      width: 24px;
+      height: 24px;
     }
 
     span {
       font-weight: bold;
       font-size: 16px;
+      margin-left: 5px;
     }
 
-    .result {
-      margin-left: auto;
+    #bes-result {
       display: flex;
       flex-direction: row;
-      justify-content: space-between;
 
       div {
         margin-left: 5px;
-      }
-      div.span {
-        font-weight: bold;
       }
     }
   }
@@ -151,10 +207,16 @@ function filterUpdate() {
 
     input {
       position: absolute;
-      top: 10px;
-      right: 10px;
+      top: 0px;
+      right: 0px;
       width: 20px;
       height: 20px;
+    }
+
+    .bes-remove {
+      position: absolute;
+      bottom: 0;
+      right: 0;
     }
   }
 }

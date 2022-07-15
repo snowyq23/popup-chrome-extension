@@ -26,12 +26,23 @@ import {
  faGripLines,
  faSolarPanel,
  faMagnifyingGlass,
+ faTrashCan,
+ faCircleMinus,
+ faPaperPlane,
 } from "@fortawesome/free-solid-svg-icons";
 
 import { fa500px } from "@fortawesome/free-brands-svg-icons";
 
 /* add icons to the library */
-library.add(faGripLines, faSolarPanel, faMagnifyingGlass, fa500px);
+library.add(
+ faGripLines,
+ faSolarPanel,
+ faMagnifyingGlass,
+ faTrashCan,
+ faCircleMinus,
+ faPaperPlane,
+ fa500px
+);
 
 /* In-app setting */
 const inApp = createApp(InApp);
