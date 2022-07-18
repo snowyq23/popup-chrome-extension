@@ -6,9 +6,14 @@
     <div class="modal-inner" v-show="showModal">
       <div class="modal-header text-h6">
         <div><img :src="logo" width="50" height="50" class="bes-logo" /></div>
-        <button type="button" @click="$emit('close')">
-          <font-awesome-icon icon="fa-solid fa-grip-lines" />
-        </button>
+        <div class="right-menu">
+          <button type="button" id="bes-reset" @click="reset">
+            <font-awesome-icon icon="fa-solid fa-arrows-rotate" />
+          </button>
+          <button type="button" id="bes-close-modal" @click="$emit('close')">
+            <font-awesome-icon icon="fa-solid fa-grip-lines" />
+          </button>
+        </div>
       </div>
       <div class="modal-content">
         <ModalContent />
@@ -19,6 +24,7 @@
 
 <script setup>
 import { defineProps, defineEmits } from "vue";
+import { useStore } from "vuex";
 import ModalContent from "./ModalContent.vue";
 import logo from "@/assets/bes.png";
 
@@ -26,6 +32,12 @@ defineProps({
   showModal: { type: Boolean, default: true },
 });
 defineEmits(["close"]);
+
+const store = useStore();
+
+const reset = () => {
+  store.dispatch("images/resetAll");
+};
 </script>
 
 <style lang="scss">
@@ -70,6 +82,10 @@ defineEmits(["close"]);
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+
+    button {
+      margin: 0px 5px;
+    }
   }
   .modal-content {
     position: relative;

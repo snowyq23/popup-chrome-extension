@@ -29,6 +29,7 @@ import {
  faTrashCan,
  faCircleMinus,
  faPaperPlane,
+ faArrowsRotate,
 } from "@fortawesome/free-solid-svg-icons";
 
 import { fa500px } from "@fortawesome/free-brands-svg-icons";
@@ -41,6 +42,7 @@ library.add(
  faTrashCan,
  faCircleMinus,
  faPaperPlane,
+ faArrowsRotate,
  fa500px
 );
 

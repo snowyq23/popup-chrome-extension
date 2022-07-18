@@ -24,14 +24,14 @@
       </div>
 
       <div id="bes-clear-all">
-        <button @click="clearSelected" class="hover-color">
+        <button @click="deleteMultiple" class="hover-color">
           <font-awesome-icon icon="fa-solid fa-circle-minus" />
-          <span>Clear</span>
+          <span>Delete</span>
         </button>
       </div>
 
       <div id="bes-clear-all">
-        <button @click="clearSelected" class="hover-color">
+        <button class="hover-color">
           <font-awesome-icon icon="fa-solid fa-paper-plane" />
           <span>Submit</span>
         </button>
@@ -63,7 +63,7 @@
         "
       />
 
-      <button @click="remove(item)" class="hover-color">
+      <button @click="removePerImage(item)" class="hover-color">
         <font-awesome-icon icon="fa-solid fa-trash-can" class="bes-remove" />
       </button>
     </div>
@@ -96,24 +96,16 @@ const checked = ref(false);
 
 /* Section: Select All */
 function selectAll(event) {
-  const items = document.querySelectorAll(".bes-checkbox");
-  for (let item of items) {
-    item.checked = event.target.checked;
-  }
-  if (event.target.checked) {
-    store.commit("images/selectAll", true);
-  } else {
-    store.commit("images/selectAll", false);
-  }
+  store.commit("images/selectAll", event.target.checked);
 }
 
 /* End Section: Select All */
 
-/* Section: Clear Selected */
-function clearSelected() {
-  store.dispatch("images/removeSelected");
+/* Section: Delete Multiple */
+function deleteMultiple() {
+  store.dispatch("images/deleteMultiple");
 }
-/* End Section: Remove image */
+/* End Section: Delete Multiple */
 
 /* Section: Image Filter */
 function filterUpdate() {
@@ -128,13 +120,14 @@ function filterUpdate() {
 }
 /* End Section: Image Filter */
 
-/* Section: Remove image */
-function remove(image) {
-  store.commit("images/setHidden", image.src);
-  const updatedPanel = panel.value.filter((el) => el !== image);
-  store.commit("images/setPanel", updatedPanel);
+/* Section: Remove ONE image */
+function removePerImage(image) {
+  store.commit("images/hideImage", image.src);
+  const result = panel.value.filter((el) => el !== image);
+  store.commit("images/setPanel", result);
+  store.commit("images/setRaw", result);
 }
-/* End Section: Remove image */
+/* End Section: Remove ONE image */
 </script>
 
 <style lang="scss">

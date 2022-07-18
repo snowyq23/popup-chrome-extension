@@ -1,7 +1,7 @@
 <template>
   <div class="main-popup">
     <div><img :src="logo" width="50" height="50" class="bes-logo" /></div>
-    <h1>Image Selector</h1>
+    <h1>Image Scanner</h1>
 
     <div class="row" @click="isDark = !isDark">
       <label class="col">

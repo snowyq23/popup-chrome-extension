@@ -3,13 +3,27 @@
 const state = {
  panel: [],
  raw: [],
- minWidth: 1,
- minHeight: 1,
  hidden: [],
+ minWidth: 1,
+ maxWidth: 100000,
+ minHeight: 1,
+ maxHeight: 100000,
 };
 
 // getters
 const getters = {};
+
+// getAllImages() {
+//     const tabId = getTabId();
+
+// chrome.scripting.executeScript(
+//     {
+//       target: { tabId: tab.id, allFrames: false },
+//       func: grabImagesPerFrame,
+//     },
+//     onResult
+//   );
+//   }
 
 // actions
 const actions = {
@@ -24,7 +38,7 @@ const actions = {
   }));
   const rawArr = [...state.raw].concat(tempArr);
 
-  // Remove duplicate and null size
+  // Remove Duplicate & Null Size & Hidden Images
   const uniqueLink = [];
   const uniqueArr = rawArr.filter((el) => {
    const isDuplicate = uniqueLink.includes(el.src);
@@ -49,8 +63,8 @@ const actions = {
   }, 1000);
  },
 
- removeSelected({ commit, state }) {
-  const updatedPanel = state.panel.filter((el) => {
+ deleteMultiple({ commit, state }) {
+  const result = state.panel.filter((el) => {
    if (el.isSelected === false) {
     return true;
    } else {
@@ -58,7 +72,14 @@ const actions = {
    }
    return false;
   });
-  commit("setPanel", updatedPanel);
+  commit("setPanel", result);
+  commit("setRaw", result);
+ },
+
+ resetAll({ commit }) {
+  commit("setPanel", []);
+  commit("setRaw", []);
+  commit("setHidden", []);
  },
 };
 
@@ -70,10 +91,17 @@ const mutations = {
  setRaw(state, images) {
   state.raw = images;
  },
- setHidden(state, link) {
+ setHidden(state, images) {
+  state.hidden = images;
+ },
+ hideImage(state, link) {
   state.hidden.push(link);
  },
  selectAll(state, val) {
+  const items = document.querySelectorAll(".bes-checkbox");
+  for (let item of items) {
+   item.checked = val;
+  }
   state.panel.forEach((image) => (image.isSelected = val));
  },
 };
