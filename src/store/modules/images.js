@@ -13,18 +13,6 @@ const state = {
 // getters
 const getters = {};
 
-// getAllImages() {
-//     const tabId = getTabId();
-
-// chrome.scripting.executeScript(
-//     {
-//       target: { tabId: tab.id, allFrames: false },
-//       func: grabImagesPerFrame,
-//     },
-//     onResult
-//   );
-//   }
-
 // actions
 const actions = {
  getAllImages({ commit, state }) {
@@ -38,19 +26,28 @@ const actions = {
   }));
   const rawArr = [...state.raw].concat(tempArr);
 
-  // Remove Duplicate & Null Size & Hidden Images
+  // Remove Duplicate & Null Size & Hidden Images (for Total)
   const uniqueLink = [];
   const uniqueArr = rawArr.filter((el) => {
    const isDuplicate = uniqueLink.includes(el.src);
    const isHidden = state.hidden.includes(el.src);
 
-   if (
-    !isDuplicate &&
-    el.naturalHeight >= state.minHeight &&
-    el.naturalWidth >= state.minWidth &&
-    !isHidden
-   ) {
+   if (!isDuplicate && !isHidden) {
     uniqueLink.push(el.src);
+    return true;
+   }
+   return false;
+  });
+
+  // Filter Image (for Result)
+  const filterArr = uniqueArr.filter((el) => {
+   const inFilterRange =
+    el.naturalWidth > state.minWidth &&
+    el.naturalWidth < state.maxWidth &&
+    el.naturalHeight > state.minHeight &&
+    el.naturalHeight < state.maxHeight;
+
+   if (inFilterRange) {
     return true;
    }
    return false;
@@ -58,8 +55,8 @@ const actions = {
 
   // Do commit
   setTimeout(() => {
-   commit("setPanel", uniqueArr);
    commit("setRaw", uniqueArr);
+   commit("setPanel", filterArr);
   }, 1000);
  },
 
@@ -85,6 +82,7 @@ const actions = {
 
 // mutations
 const mutations = {
+ // Default
  setPanel(state, images) {
   state.panel = images;
  },
@@ -103,6 +101,20 @@ const mutations = {
    item.checked = val;
   }
   state.panel.forEach((image) => (image.isSelected = val));
+ },
+
+ // // Filter
+ setMinWidth(state, val) {
+  state.minWidth = val;
+ },
+ setMaxWidth(state, val) {
+  state.maxWidth = val;
+ },
+ setMinHeight(state, val) {
+  state.minHeight = val;
+ },
+ setMaxHeight(state, val) {
+  state.maxHeight = val;
  },
 };
 

@@ -3,15 +3,19 @@
     <div style="text-align: left; font-size: 20px">Filter By</div>
     <div id="filter-image">
       <FilterPanel
-        v-model:min="minWidth"
-        v-model:max="maxWidth"
+        :min="minWidth"
+        @update:min="(newVal) => setMinWidth(newVal)"
+        :max="maxWidth"
+        @update:max="(newVal) => setMaxWidth(newVal)"
         @filterUpdate="filterUpdate"
         >Width</FilterPanel
       >
 
       <FilterPanel
-        v-model:min="minHeight"
-        v-model:max="maxHeight"
+        :min="minHeight"
+        @update:min="(newVal) => setMinHeight(newVal)"
+        :max="maxHeight"
+        @update:max="(newVal) => setMaxHeight(newVal)"
         @filterUpdate="filterUpdate"
         >Height</FilterPanel
       >
@@ -85,11 +89,11 @@ const panel = computed(() => store.state.images.panel);
 const raw = computed(() => store.state.images.raw);
 
 // Width
-const minWidth = ref(1);
-const maxWidth = ref(100000);
+const minWidth = computed(() => store.state.images.minWidth);
+const maxWidth = computed(() => store.state.images.maxWidth);
 // Height
-const minHeight = ref(1);
-const maxHeight = ref(100000);
+const minHeight = computed(() => store.state.images.minHeight);
+const maxHeight = computed(() => store.state.images.maxHeight);
 
 // Checkbox
 const checked = ref(false);
@@ -108,6 +112,19 @@ function deleteMultiple() {
 /* End Section: Delete Multiple */
 
 /* Section: Image Filter */
+function setMinWidth(val) {
+  store.commit("images/setMinWidth", val);
+}
+function setMaxWidth(val) {
+  store.commit("images/setMaxWidth", val);
+}
+function setMinHeight(val) {
+  store.commit("images/setMinHeight", val);
+}
+function setMaxHeight(val) {
+  store.commit("images/setMaxHeight", val);
+}
+
 function filterUpdate() {
   const filtered = raw.value.filter(
     (image) =>

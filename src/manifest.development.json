@@ -12,6 +12,10 @@
   "webRequest"
  ],
 
+ "background": {
+  "service_worker": ["background.js"]
+ },
+
  "icons": {
   "16": "icons/bes16.png",
   "48": "icons/bes48.png",
@@ -25,6 +29,7 @@
  "content_scripts": [
   {
    "matches": ["<all_urls>"],
+   "all_frames": true,
    "js": ["content.js"]
   }
  ],
