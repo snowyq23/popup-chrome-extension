@@ -1,13 +1,17 @@
 /* eslint-disable prettier/prettier */
+// default value
+const defaultMin = 1;
+const defaultMax = 100000;
+
 // initial state
 const state = {
  panel: [],
  raw: [],
  hidden: [],
- minWidth: 1,
- maxWidth: 100000,
- minHeight: 1,
- maxHeight: 100000,
+ minWidth: defaultMin,
+ maxWidth: defaultMax,
+ minHeight: defaultMin,
+ maxHeight: defaultMax,
 };
 
 // getters
@@ -77,6 +81,11 @@ const actions = {
   commit("setPanel", []);
   commit("setRaw", []);
   commit("setHidden", []);
+
+  commit("setMinWidth", defaultMin);
+  commit("setMaxWidth", defaultMax);
+  commit("setMinHeight", defaultMin);
+  commit("setMaxHeight", defaultMax);
  },
 };
 
