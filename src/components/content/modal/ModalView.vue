@@ -10,6 +10,9 @@
           <button type="button" id="bes-reset" @click="reset">
             <font-awesome-icon icon="fa-solid fa-arrows-rotate" />
           </button>
+          <button type="button" id="bes-authenticate" @click="showAuth = true">
+            <font-awesome-icon icon="fa-solid fa-key" />
+          </button>
           <button type="button" id="bes-close-modal" @click="$emit('close')">
             <font-awesome-icon icon="fa-solid fa-grip-lines" />
           </button>
@@ -20,13 +23,22 @@
       </div>
     </div>
   </Transition>
+
+  <AuthModal
+    :showPopup="showAuth"
+    :currentToken="currentToken"
+    @closePopup="showAuth = false"
+    v-model:val="newToken"
+    @confirm="addToken(newToken)"
+  />
 </template>
 
 <script setup>
-import { defineProps, defineEmits } from "vue";
+import { defineProps, defineEmits, ref, computed } from "vue";
 import { useStore } from "vuex";
 import ModalContent from "./ModalContent.vue";
 import logo from "@/assets/bes.png";
+import AuthModal from "../auth/AuthModal.vue";
 
 defineProps({
   showModal: { type: Boolean, default: true },
@@ -38,6 +50,19 @@ const store = useStore();
 const reset = () => {
   store.dispatch("images/resetAll");
 };
+
+/* Section: Authentication */
+const showAuth = ref(false);
+const hasToken = ref(false);
+const newToken = ref("");
+const currentToken = computed(() => store.state.auth.authToken);
+const addToken = (text) => {
+  if (text != "") {
+    hasToken.value = true;
+  }
+  store.commit("auth/setToken", text);
+};
+/* End Section: Authentication */
 </script>
 
 <style lang="scss">

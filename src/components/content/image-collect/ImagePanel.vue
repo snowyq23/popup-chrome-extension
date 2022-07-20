@@ -7,7 +7,6 @@
         @update:min="(newVal) => setMinWidth(newVal)"
         :max="maxWidth"
         @update:max="(newVal) => setMaxWidth(newVal)"
-        @filterUpdate="filterUpdate"
         >Width</FilterPanel
       >
 
@@ -16,26 +15,30 @@
         @update:min="(newVal) => setMinHeight(newVal)"
         :max="maxHeight"
         @update:max="(newVal) => setMaxHeight(newVal)"
-        @filterUpdate="filterUpdate"
         >Height</FilterPanel
       >
     </div>
 
     <div class="btn-panel">
-      <div id="bes-select-all">
+      <div class="inline">
         <input type="checkbox" @click="selectAll" />
         <span>Select all</span>
       </div>
 
-      <div id="bes-clear-all">
+      <div class="inline">
         <button @click="deleteMultiple" class="hover-color">
           <font-awesome-icon icon="fa-solid fa-circle-minus" />
           <span>Delete</span>
         </button>
       </div>
 
-      <div id="bes-clear-all">
-        <button class="hover-color">
+      <div class="inline">
+        <button
+          class="hover-color"
+          @click="submit"
+          :disabled="disableSubmit"
+          :class="{ 'disable-button': disableSubmit }"
+        >
           <font-awesome-icon icon="fa-solid fa-paper-plane" />
           <span>Submit</span>
         </button>
@@ -84,6 +87,9 @@ import FilterPanel from "./FilterPanel.vue";
 // Store
 const store = useStore();
 
+// Auth
+const disableSubmit = computed(() => store.state.auth.disableSubmit);
+
 // Image List
 const panel = computed(() => store.state.images.panel);
 const raw = computed(() => store.state.images.raw);
@@ -114,28 +120,20 @@ function deleteMultiple() {
 /* Section: Image Filter */
 function setMinWidth(val) {
   store.commit("images/setMinWidth", val);
+  store.dispatch("images/filterImages");
 }
 function setMaxWidth(val) {
   store.commit("images/setMaxWidth", val);
+  store.dispatch("images/filterImages");
 }
 function setMinHeight(val) {
   store.commit("images/setMinHeight", val);
+  store.dispatch("images/filterImages");
 }
 function setMaxHeight(val) {
   store.commit("images/setMaxHeight", val);
+  store.dispatch("images/filterImages");
 }
-
-function filterUpdate() {
-  const filtered = raw.value.filter(
-    (image) =>
-      image.naturalWidth > minWidth.value &&
-      image.naturalWidth < maxWidth.value &&
-      image.naturalHeight > minHeight.value &&
-      image.naturalHeight < maxHeight.value
-  );
-  store.commit("images/setPanel", filtered);
-}
-/* End Section: Image Filter */
 
 /* Section: Remove ONE image */
 function removePerImage(image) {
@@ -145,6 +143,13 @@ function removePerImage(image) {
   store.commit("images/setRaw", result);
 }
 /* End Section: Remove ONE image */
+
+/* Section: Submit folder of images */
+function submit() {
+  // const submitted = panel.value.filter((el) => el.isSelected === true);
+  alert("Uploaded");
+}
+/* End Section: Submit folder of images */
 </script>
 
 <style lang="scss">
@@ -163,8 +168,12 @@ function removePerImage(image) {
     margin-right: 10px;
     justify-content: space-between;
 
-    #bes-select-all {
+    .inline {
       display: inline-flex;
+    }
+
+    .disable-button {
+      color: gray;
     }
 
     input {

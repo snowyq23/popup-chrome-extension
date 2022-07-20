@@ -60,7 +60,7 @@ const scan = () => {
     justify-content: center;
     width: 150px;
     height: 48px;
-    background: rgb(81, 121, 155);
+    background: rgb(15, 19, 22);
     border-radius: 4px;
     padding: 4px 8px;
     margin: 0px 5px;

@@ -30,6 +30,8 @@ import {
  faCircleMinus,
  faPaperPlane,
  faArrowsRotate,
+ faKey,
+ faXmark,
 } from "@fortawesome/free-solid-svg-icons";
 
 import { fa500px } from "@fortawesome/free-brands-svg-icons";
@@ -43,6 +45,8 @@ library.add(
  faCircleMinus,
  faPaperPlane,
  faArrowsRotate,
+ faKey,
+ faXmark,
  fa500px
 );
 

@@ -64,6 +64,17 @@ const actions = {
   }, 1000);
  },
 
+ filterImages({ commit, state }) {
+  const filtered = state.raw.filter(
+   (image) =>
+    image.naturalWidth > state.minWidth &&
+    image.naturalWidth < state.maxWidth &&
+    image.naturalHeight > state.minHeight &&
+    image.naturalHeight < state.maxHeight
+  );
+  commit("setPanel", filtered);
+ },
+
  deleteMultiple({ commit, state }) {
   const result = state.panel.filter((el) => {
    if (el.isSelected === false) {

@@ -9,7 +9,6 @@
           name="size-min-value"
           :value="min"
           @input="$emit('update:min', parseFloat($event.target.value))"
-          @keyup.enter="$emit('filterUpdate')"
         />
         <label class="place-holder">px</label>
       </span>
@@ -21,7 +20,6 @@
           name="size-max-value"
           :value="max"
           @input="$emit('update:max', parseFloat($event.target.value))"
-          @keyup.enter="$emit('filterUpdate')"
         />
         <label class="place-holder">px</label>
       </span>
