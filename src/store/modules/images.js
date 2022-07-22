@@ -32,13 +32,16 @@ const actions = {
   }));
   const rawArr = [...state.raw].concat(tempArr);
 
-  // Remove Duplicate & Null Size & Hidden Images (for Total)
+  // Remove Duplicate & Null Size & Hidden Images  (for Total)
   const uniqueLink = [];
   const uniqueArr = rawArr.filter((el) => {
    const isDuplicate = uniqueLink.includes(el.src);
    const isHidden = state.hidden.includes(el.src);
 
-   if (!isDuplicate && !isHidden) {
+   // // Disable unsupported format of images (Temporarily until back-end supports it)
+   const isBase64 = el.src.includes("data:image/jpeg;base64");
+
+   if (!isDuplicate && !isHidden && !isBase64) {
     uniqueLink.push(el.src);
     return true;
    }
@@ -106,24 +109,24 @@ const actions = {
   commit("setMaxHeight", defaultMax);
  },
 
- uploadImages({ rootState }) {
+ async uploadImages({ rootState }) {
   const selected = [];
   state.panel.forEach((el) => {
    if (el.isSelected) selected.push(el.src);
   });
+
   if (selected.length === 0) {
    alert("Please select at least one image before submitting.");
   } else {
-   //    try {
-   const token = rootState.auth.authToken;
-   const uploaded = { token: token, urls: selected };
-   console.log(uploaded);
-   API.Files.uploadImages(uploaded);
-   alert("Uploaded");
-   //    } catch (err) {
-   //     console.log("err", err);
-   //     alert("Something went wrong. Please try again.");
-   //    }
+   try {
+    const token = rootState.auth.authToken;
+    const uploaded = { token: token, urls: selected };
+    await API.Files.uploadImages(uploaded);
+    alert("Uploaded");
+   } catch (err) {
+    console.log("err", err);
+    alert("Something went wrong. Please try again.");
+   }
   }
  },
 };
