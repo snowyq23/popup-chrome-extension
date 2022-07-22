@@ -8,7 +8,7 @@ const state = {
 const mutations = {
  setToken(state, text) {
   state.authToken = text;
-  state.disableSubmit = false;
+  state.disableSubmit = text !== "" ? false : true;
  },
 };
 

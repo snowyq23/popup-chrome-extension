@@ -1,6 +1,6 @@
 <template>
   <div class="header">
-    <div style="text-align: left; font-size: 20px">Filter By</div>
+    <h3 style="text-align: left">Filter By</h3>
     <div id="filter-image">
       <FilterPanel
         :min="minWidth"
@@ -21,7 +21,7 @@
 
     <div class="btn-panel">
       <div class="inline">
-        <input type="checkbox" @click="selectAll" />
+        <input type="checkbox" @click="selectAll" class="bes-checkbox" />
         <span>Select all</span>
       </div>
 

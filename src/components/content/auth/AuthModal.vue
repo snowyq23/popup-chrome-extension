@@ -1,5 +1,5 @@
 <template>
-  <Transition name="ease-out">
+  <Transition name="ease-in-out">
     <div class="auth-overlay">
       <div class="auth-inner">
         <div class="header">
@@ -39,21 +39,17 @@
             ADD
           </button>
 
-          <button
+          <!-- <button
             type="button"
             class="bes-footer-btn"
             @click="$emit('closePopup')"
           >
             DONE
-          </button>
+          </button> -->
         </div>
       </div>
-      <!-- </div> -->
     </div>
   </Transition>
-  <!-- <Transition name="ease-out">
-    
-  </Transition> -->
 </template>
 
 <script setup>

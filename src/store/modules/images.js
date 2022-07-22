@@ -107,6 +107,9 @@ const actions = {
   commit("setMaxWidth", defaultMax);
   commit("setMinHeight", defaultMin);
   commit("setMaxHeight", defaultMax);
+
+  // Reset checkbox
+  commit("selectAll", false);
  },
 
  async uploadImages({ rootState }) {

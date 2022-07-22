@@ -12,6 +12,11 @@
           </button>
           <button type="button" id="bes-authenticate" @click="showAuth = true">
             <font-awesome-icon icon="fa-solid fa-key" />
+            <font-awesome-icon
+              icon="fa-solid fa-circle-check"
+              class="small-icon"
+              v-show="hasToken"
+            />
           </button>
           <button type="button" id="bes-close-modal" @click="$emit('close')">
             <font-awesome-icon icon="fa-solid fa-grip-lines" />
@@ -47,13 +52,6 @@ defineEmits(["close"]);
 
 const store = useStore();
 
-/* Section: Reset All */
-
-const reset = () => {
-  store.dispatch("images/resetAll");
-};
-/* Section: Reset All */
-
 /* Section: Authentication */
 const showAuth = ref(false);
 const hasToken = ref(false);
@@ -65,6 +63,7 @@ const addToken = (text) => {
   }
   store.commit("auth/setToken", text);
   newToken.value = "";
+  showAuth.value = false;
 };
 
 const closeAuth = () => {
@@ -72,6 +71,13 @@ const closeAuth = () => {
   newToken.value = "";
 };
 /* End Section: Authentication */
+
+/* Section: Reset All */
+const reset = () => {
+  hasToken.value = false;
+  store.dispatch("images/resetAll");
+};
+/* Section: Reset All */
 </script>
 
 <style lang="scss">
@@ -119,6 +125,14 @@ const closeAuth = () => {
 
     button {
       margin: 0px 5px;
+    }
+
+    .small-icon {
+      font-size: 50%;
+      color: green;
+      // position: absolute;
+      // right: 0;
+      // bottom: 0;
     }
   }
   .modal-content {

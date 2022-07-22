@@ -3,17 +3,6 @@
     <div><img :src="logo" width="50" height="50" class="bes-logo" /></div>
     <h1>Image Scanner</h1>
 
-    <div class="row" @click="isDark = !isDark">
-      <label class="col">
-        <div>Dark Mode</div>
-
-        <div class="toggle" :class="[{ on: isDark }, { off: !isDark }]">
-          <div class="label">{{ isDark ? "ON" : "OFF" }}</div>
-          <div class="circle">{{ changeBg() }}</div>
-        </div>
-      </label>
-    </div>
-
     <div class="row" @click="isCheckbox = !isCheckbox">
       <label class="col">
         <div>Mode</div>
@@ -33,18 +22,6 @@ import logo from "@/assets/bes.png";
 
 /* Toggle */
 const isCheckbox = ref(true);
-
-/* Dark Mode */
-const isDark = ref(false);
-function changeBg() {
-  if (isDark.value === true) {
-    document.body.style.backgroundColor = "black";
-    document.body.style.color = "white";
-  } else {
-    document.body.style.backgroundColor = "var(--body-bg)";
-    document.body.style.color = "black";
-  }
-}
 </script>
 
 <style lang="scss">

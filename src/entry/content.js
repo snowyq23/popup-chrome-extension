@@ -32,9 +32,8 @@ import {
  faArrowsRotate,
  faKey,
  faXmark,
+ faCircleCheck,
 } from "@fortawesome/free-solid-svg-icons";
-
-import { fa500px } from "@fortawesome/free-brands-svg-icons";
 
 /* add icons to the library */
 library.add(
@@ -47,7 +46,7 @@ library.add(
  faArrowsRotate,
  faKey,
  faXmark,
- fa500px
+ faCircleCheck
 );
 
 /* In-app setting */
