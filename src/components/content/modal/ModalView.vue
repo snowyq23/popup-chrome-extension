@@ -25,9 +25,9 @@
   </Transition>
 
   <AuthModal
-    :showPopup="showAuth"
+    v-show="showAuth"
     :currentToken="currentToken"
-    @closePopup="showAuth = false"
+    @closePopup="closeAuth"
     v-model:val="newToken"
     @confirm="addToken(newToken)"
   />
@@ -47,9 +47,12 @@ defineEmits(["close"]);
 
 const store = useStore();
 
+/* Section: Reset All */
+
 const reset = () => {
   store.dispatch("images/resetAll");
 };
+/* Section: Reset All */
 
 /* Section: Authentication */
 const showAuth = ref(false);
@@ -61,6 +64,12 @@ const addToken = (text) => {
     hasToken.value = true;
   }
   store.commit("auth/setToken", text);
+  newToken.value = "";
+};
+
+const closeAuth = () => {
+  showAuth.value = false;
+  newToken.value = "";
 };
 /* End Section: Authentication */
 </script>

@@ -147,7 +147,7 @@ function removePerImage(image) {
 /* Section: Submit folder of images */
 function submit() {
   // const submitted = panel.value.filter((el) => el.isSelected === true);
-  alert("Uploaded");
+  store.dispatch("images/uploadImages");
 }
 /* End Section: Submit folder of images */
 </script>
@@ -159,11 +159,13 @@ function submit() {
   #filter-image {
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
   }
 
   .btn-panel {
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
     align-items: center;
     margin-right: 10px;
     justify-content: space-between;

@@ -39,7 +39,7 @@ const scan = () => {
   position: fixed;
   top: 0;
   right: 10%;
-  z-index: 9999;
+  z-index: 999;
   padding: 20px 0;
   background: linear-gradient(rgb(153, 156, 130), rgb(190, 186, 134));
   border-radius: 10px;

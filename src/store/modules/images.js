@@ -1,4 +1,6 @@
 /* eslint-disable prettier/prettier */
+import API from "@/api";
+
 // default value
 const defaultMin = 1;
 const defaultMax = 100000;
@@ -89,14 +91,40 @@ const actions = {
  },
 
  resetAll({ commit }) {
+  // Reset authentication
+  commit("auth/setToken", "", { root: true });
+
+  // Reset default
   commit("setPanel", []);
   commit("setRaw", []);
   commit("setHidden", []);
 
+  // Reset filter
   commit("setMinWidth", defaultMin);
   commit("setMaxWidth", defaultMax);
   commit("setMinHeight", defaultMin);
   commit("setMaxHeight", defaultMax);
+ },
+
+ uploadImages({ rootState }) {
+  const selected = [];
+  state.panel.forEach((el) => {
+   if (el.isSelected) selected.push(el.src);
+  });
+  if (selected.length === 0) {
+   alert("Please select at least one image before submitting.");
+  } else {
+   //    try {
+   const token = rootState.auth.authToken;
+   const uploaded = { token: token, urls: selected };
+   console.log(uploaded);
+   API.Files.uploadImages(uploaded);
+   alert("Uploaded");
+   //    } catch (err) {
+   //     console.log("err", err);
+   //     alert("Something went wrong. Please try again.");
+   //    }
+  }
  },
 };
 
