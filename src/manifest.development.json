@@ -4,6 +4,10 @@
  "description": "Scan images",
  "version": "0.0.1",
 
+ "background": {
+  "service_worker": "background.js"
+ },
+
  "permissions": [
   "scripting",
   "activeTab",

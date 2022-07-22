@@ -3,7 +3,7 @@
     <div><img :src="logo" width="50" height="50" class="bes-logo" /></div>
     <h1>Image Scanner</h1>
 
-    <div class="row" @click="isCheckbox = !isCheckbox">
+    <div class="row" @click="enableScanner">
       <label class="col">
         <div>Mode</div>
 
@@ -22,6 +22,25 @@ import logo from "@/assets/bes.png";
 
 /* Toggle */
 const isCheckbox = ref(true);
+
+/* Section: Enable Image Scanner*/
+const enableScanner = () => {
+  isCheckbox.value = !isCheckbox.value;
+
+  // Get active browser tab
+  chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+    var tab = tabs[0];
+    if (tab) {
+      setTimeout(() => {
+        chrome.tabs.sendMessage(tab.id, {
+          msg: { enableScanner: isCheckbox.value },
+        });
+      }, 200);
+    } else {
+      alert("There are no active tabs");
+    }
+  });
+};
 </script>
 
 <style lang="scss">

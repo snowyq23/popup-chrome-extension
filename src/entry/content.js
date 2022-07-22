@@ -54,5 +54,4 @@ const inApp = createApp(InApp);
 
 inApp.use(store).use(vuetify);
 inApp.component("font-awesome-icon", FontAwesomeIcon);
-
 inApp.mount("#bes-extension");

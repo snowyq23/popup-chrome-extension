@@ -1,5 +1,5 @@
 <template>
-  <div class="main_in_app">
+  <div class="main_in_app" v-show="enableScanner">
     <button @click="openModal" class="btn">
       <font-awesome-icon icon="fa-solid fa-solar-panel" />
       <div>IMAGE PANEL</div>
@@ -16,11 +16,17 @@
 
 <script setup>
 // import { ref } from "vue";
-import { computed } from "vue";
+import { ref, computed } from "vue";
 import { useStore } from "vuex";
 import ModalView from "../components/content/modal/ModalView.vue";
 
 const store = useStore();
+
+/* ENABLE SCANNER */
+const enableScanner = ref(false);
+chrome.runtime.onMessage.addListener(function (request) {
+  enableScanner.value = request.msg.enableScanner;
+});
 
 /* MODAL */
 const isOpen = computed(() => store.state.modal.isOpen);
