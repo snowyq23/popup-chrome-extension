@@ -10,7 +10,7 @@
       <div>SCAN</div>
     </button>
 
-    <ModalView :showModal="isOpen" @close="closeModal"> </ModalView>
+    <MenuView :showModal="isOpen" @close="closeModal"> </MenuView>
   </div>
 </template>
 
@@ -18,12 +18,12 @@
 // import { ref } from "vue";
 import { ref, computed } from "vue";
 import { useStore } from "vuex";
-import ModalView from "../components/content/modal/ModalView.vue";
+import MenuView from "../components/content/menu/MenuView.vue";
 
 const store = useStore();
 
 /* ENABLE SCANNER */
-const enableScanner = ref(false);
+const enableScanner = ref(true);
 chrome.runtime.onMessage.addListener(function (request) {
   enableScanner.value = request.msg.enableScanner;
 });

@@ -24,7 +24,7 @@
         </div>
       </div>
       <div class="modal-content">
-        <ModalContent />
+        <MenuContent />
       </div>
     </div>
   </Transition>
@@ -41,7 +41,7 @@
 <script setup>
 import { defineProps, defineEmits, ref, computed } from "vue";
 import { useStore } from "vuex";
-import ModalContent from "./ModalContent.vue";
+import MenuContent from "./MenuContent.vue";
 import logo from "@/assets/bes.png";
 import AuthModal from "../auth/AuthModal.vue";
 

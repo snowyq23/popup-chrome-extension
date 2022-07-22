@@ -8,18 +8,18 @@
           maxlength="8"
           name="size-min-value"
           :value="min"
-          @input="$emit('update:min', parseFloat($event.target.value))"
+          @input="$emit('update:min', Number($event.target.value))"
         />
         <label class="place-holder">px</label>
       </span>
       <div class="divider">-</div>
       <span class="range-right">
         <input
-          type="tel"
+          type="text"
           maxlength="8"
           name="size-max-value"
           :value="max"
-          @input="$emit('update:max', parseFloat($event.target.value))"
+          @input="$emit('update:max', Number($event.target.value))"
         />
         <label class="place-holder">px</label>
       </span>
